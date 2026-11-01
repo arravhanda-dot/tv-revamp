@@ -22,10 +22,11 @@ cloud container that cannot see your home network, so the work on the TV itself 
 3. Start `claude` in that folder and paste [`PROMPT.md`](PROMPT.md) (the part between the `---` lines),
    with your TV model filled in. Add this:
 
-   > Use the `themes/midnight-blue` theme (`tools/theme.sh themes/midnight-blue`). My answers are in
-   > MY_TV.md under "My choices". Keep Google Assistant, the Google TV / Ambient screensaver and the
-   > photos it currently uses, Chromecast, Play Store, the TV's update service and all HDMI/Live TV
-   > services. Replace the theme's screenshot.jpg with a real capture from the TV.
+   > My TV is a TCL Android TV Pro on Android TV 11. Use the `themes/midnight-blue` theme
+   > (`tools/theme.sh themes/midnight-blue`). My answers and a never-disable list are in MY_TV.md
+   > under "My choices"; treat them as already answered. Keep Google Assistant, the screensaver and the
+   > photos it currently uses, Chromecast, firmware updates, Live TV/antenna and TCL Channel. Don't
+   > change any system settings. Replace the theme's screenshot.jpg with a real capture from the TV.
 
 ## What you get
 
@@ -57,15 +58,40 @@ and a small GPU, and live blur makes the whole UI stutter. So the launcher draws
 layers with a sheen and a rim, without blur. It looks frosted and stays smooth. If your TV has 2 GB or more,
 add `"wallpaper_true_color": true` to the theme for an even smoother gradient.
 
-## My choices (fill in before you start)
+## My choices
 
-- TV model (Settings → System → About → Model):
-- Apps to keep (everything else from TCL/preloads can go):
-  - [ ] YouTube   - [ ] Netflix   - [ ] Prime Video   - [ ] Disney+ Hotstar   - [ ] JioCinema
-  - [ ] Spotify   - [ ] Apple TV  - [ ] Zee5          - [ ] SonyLIV           - [ ] other:
-- Dock (4–7 apps, in order):
-- Keep: Google Assistant ✔ · screensaver ✔ · Chromecast ? · firmware updates ? · Live TV / tuner ?
-- When the TV turns on, open: Home / Live TV / last HDMI input
+- **TV:** TCL "Android TV Pro", Android TV OS 11 (India). Read the exact model and build off the TV with
+  `tools/tv.py --probe` first. No recorded entry matches it yet; the closest are the TCL Android TV 11 sets
+  in `examples/` (`tcl-55p638`, `tcl-55c815`, `tcl-50p615` …). Use them as a guide, not a list to apply.
+- **Dock, in this order** (already in `themes/midnight-blue/config.json`):
+  Netflix → YouTube → Prime Video → JioHotstar → Sony LIV.
+  JioHotstar ships as `in.startv.hotstar.dplus.tv` on most TVs and `in.startv.hotstar` on some; both are
+  listed and the launcher skips the one that isn't installed. Once on the TV, keep only the installed one.
+- **Below the dock:** every other app (Zee5 first among them) in a 5-column grid that scrolls up on Down.
+- **Top-left corner:** greeting, clock and date.
+- **Power on:** Home with the dock. If the TV boots into Live TV on its own, set `power_on_home`
+  (needs `HOME_KEY_SERVICE=1`, see `PROMPT.md`).
+- **Settings:** leave every system setting as it is. Only the home screen changes. After the stock
+  launcher is off, press the remote's Settings, Input and app buttons and remap any that stop working.
+- **No ads:** stock home screen and its promo rows gone, TCL ad/analytics/content-feed services disabled.
+
+### Never disable (on top of what `tools/disable.sh` already protects)
+
+| What | Packages |
+|---|---|
+| Apps I use | `com.netflix.ninja`, `com.google.android.youtube.tv`, `com.amazon.amazonvideo.livingroom`, `in.startv.hotstar.dplus.tv` / `in.startv.hotstar`, `com.sonyliv`, `com.graymatrix.did` (Zee5) |
+| Chromecast | `com.google.android.apps.mediashell` |
+| Firmware updates | `com.tcl.versionUpdateApp`, `com.tcl.rc.ota`, `com.tcl.ttvs` (holds the updater on some TCL builds) |
+| Live TV / antenna | `com.tcl.tv`, `com.tcl.tvinput`, `com.mediatek.*` TV services, `com.cltv.mal` |
+| TCL Channel | `com.tcl.channelplus`, `com.tcl.tv.tclchannel`, `com.tcl.waterfall.overseas` if it is what the TCL Channel button opens |
+| Google Assistant | `com.google.android.katniss` and TCL's remote/voice services |
+| Screensaver | `com.google.android.apps.tv.dreamx`, `com.google.android.backdrop`; check `settings get secure screensaver_components` and keep whatever it names |
+| Settings | `com.android.tv.settings`, `com.tcl.settings` |
+
+Two of these choices pull against "no ads", and both are kept as asked:
+- **TCL Channel** is free, ad-supported live channels. Its streams carry their own ads.
+- **The screensaver** can mix in Google promos. To turn them off: Settings → System → Ambient mode,
+  then switch off anything that isn't your photos.
 
 ## Testing
 

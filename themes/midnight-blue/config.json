@@ -1,4 +1,15 @@
 {
+  "dock_apps": [
+    "com.netflix.ninja",
+    "com.google.android.youtube.tv",
+    "com.amazon.amazonvideo.livingroom",
+    "in.startv.hotstar.dplus.tv",
+    "in.startv.hotstar",
+    "com.sonyliv"
+  ],
+  "fill_dock": false,
+  "columns": 5,
+  "rows_below_dock": 1,
   "background_color": "#000000",
   "wallpaper": true,
   "wallpaper_rotation_minutes": 0,
