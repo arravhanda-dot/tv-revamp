@@ -16,17 +16,29 @@ cloud container that cannot see your home network, so the work on the TV itself 
 2. On the computer:
 
    ```bash
-   git clone https://github.com/arravhanda-dot/tv-revamp && cd tv-revamp
+   git clone -b claude/relaxed-babbage-lrexd7 https://github.com/arravhanda-dot/tv-revamp && cd tv-revamp
    ```
 
-3. Start `claude` in that folder and paste [`PROMPT.md`](PROMPT.md) (the part between the `---` lines),
-   with your TV model filled in. Add this:
+3. Start `claude` in that folder and paste this one message:
 
-   > My TV is a TCL Android TV Pro on Android TV 11. Use the `themes/midnight-blue` theme
-   > (`tools/theme.sh themes/midnight-blue`). My answers and a never-disable list are in MY_TV.md
-   > under "My choices"; treat them as already answered. Keep Google Assistant, the screensaver and the
-   > photos it currently uses, Chromecast, firmware updates, Live TV/antenna and TCL Channel. Don't
-   > change any system settings. Replace the theme's screenshot.jpg with a real capture from the TV.
+   > Read PROMPT.md (the part between the `---` lines) and MY_TV.md, and do the whole job on my TV:
+   > a TCL Android TV Pro on Android TV 11, on this Wi-Fi. My answers and the never-disable list are in
+   > MY_TV.md under "My choices"; treat those questions as already answered. Before changing anything,
+   > run `my-tv/backup.sh` and keep the snapshot. Use the `themes/midnight-blue` theme
+   > (`tools/theme.sh themes/midnight-blue`). Keep Google Assistant, the screensaver and its photos,
+   > Chromecast, firmware updates, Live TV/antenna and TCL Channel. Don't change any system settings.
+   > Replace the theme's screenshot.jpg with a real capture from the TV. Tell me when to accept the
+   > "Allow USB debugging?" prompt on the TV.
+
+## Backup and undo
+
+- `my-tv/backup.sh` saves a snapshot to `my-tv/backup/<date>/` on the computer before anything changes: every
+  package, the disabled list, all settings, build properties, the original Home app and a screenshot.
+  Keep that folder. It stays out of git because settings can include your network names.
+- Apps are only ever **disabled**, never uninstalled, so the original software stays on the TV.
+- To put the TV back exactly as it was: `TV_HOST=<tv ip> my-tv/restore-all.sh`. It re-enables everything
+  that was enabled in the snapshot, hands Home back to the TCL launcher and removes the new launcher.
+- To undo only the debloat list, `tools/restore.sh <list>` also works.
 
 ## What you get
 
