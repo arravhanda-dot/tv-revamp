@@ -19,16 +19,8 @@ cloud container that cannot see your home network, so the work on the TV itself 
    git clone -b claude/relaxed-babbage-lrexd7 https://github.com/arravhanda-dot/tv-revamp && cd tv-revamp
    ```
 
-3. Start `claude` in that folder and paste this one message:
-
-   > Read PROMPT.md (the part between the `---` lines) and MY_TV.md, and do the whole job on my TV:
-   > a TCL Android TV Pro on Android TV 11, on this Wi-Fi. My answers and the never-disable list are in
-   > MY_TV.md under "My choices"; treat those questions as already answered. Before changing anything,
-   > run `my-tv/backup.sh` and keep the snapshot. Use the `themes/midnight-blue` theme
-   > (`tools/theme.sh themes/midnight-blue`). Keep Google Assistant, the screensaver and its photos,
-   > Chromecast, firmware updates, Live TV/antenna and TCL Channel. Don't change any system settings.
-   > Replace the theme's screenshot.jpg with a real capture from the TV. Tell me when to accept the
-   > "Allow USB debugging?" prompt on the TV.
+3. Start `claude` and paste the prompt in [`my-tv/LOCAL_PROMPT.md`](my-tv/LOCAL_PROMPT.md) (everything below
+   its line). It holds all my answers, so the session only asks about what it finds on the TV.
 
 ## Backup and undo
 
