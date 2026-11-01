@@ -1,0 +1,58 @@
+# TCL "Android TV Pro", Android TV 11 (India): what my-tv/setup_tv.py disables.
+# Not yet tried on this exact set. It is the part of the TCL 55P638 list (examples/tcl-55p638, same
+# Android TV 11 platform, reboot-checked) that matches this owner's choices, plus packages that most of
+# the 24 TCL Android TV 11 lists in examples/ disable. setup_tv.py keeps only the lines that are
+# installed and enabled on the TV, so a package this set doesn't ship is skipped.
+#
+# Apply: python3 my-tv/setup_tv.py (or: TV_HOST=<tv ip> tools/disable.sh my-tv/tcl-android-tv-pro.txt)
+# Restore: python3 my-tv/setup_tv.py restore (or: TV_HOST=<tv ip> tools/restore.sh my-tv/tcl-android-tv-pro.txt)
+# Everything is DISABLED, not uninstalled.
+#
+# Kept on purpose, so never listed here: Netflix, YouTube, Prime Video, JioHotstar, Sony LIV, Zee5;
+# Chromecast (com.google.android.apps.mediashell); firmware updates (com.tcl.versionUpdateApp,
+# com.tcl.rc.ota, com.tcl.ttvs, com.tcl.UpdatePeripheral); Live TV and the tuner (com.tcl.tv,
+# com.tcl.tvinput, MediaTek TV services); TCL Channel and TCL TV+ (com.tcl.channelplus,
+# com.tcl.tv.tclchannel, com.tcl.waterfall.overseas, com.tcl.tv.plus); Google Assistant and the remote's
+# mic (com.google.android.katniss, com.google.android.tv.assistant, com.tcl.assistant, com.tcl.micmanager,
+# com.google.android.tv.remote.service); the screensaver (com.google.android.apps.tv.dreamx,
+# com.google.android.backdrop); Settings and the Settings key (com.android.tv.settings, com.tcl.settings,
+# com.tcl.dashboard); the remote and keyboard (com.tcl.keyhelp, com.tcl.autopair,
+# com.tcl.tcl_bt_rcu_service, the keyboard in use); USB media, MagiConnect, Miracast, T-Solo, the
+# gallery; Play Store and Play services.
+
+# Google TV first-run wizard: it claims Home once the stock launcher is off. setup_tv.py leaves it
+# enabled when it owns the saved Wi-Fi network (disabling it would delete that network).
+com.google.android.tungsten.setupwraith
+
+# TCL analytics, logging and support pop-ups
+com.tcl.bi                           # analytics / telemetry service
+com.tcl.logkit                       # log collection and upload
+com.tcl.guard                        # TGuard cleaner / support pop-ups
+com.tcl.interactive                  # TCL TIAS background service
+
+# TCL ads, promos and home-screen content pushes
+com.tcl.esticker                     # store-demo stickers
+com.tcl.partnercustomizer            # promo rows on the stock home
+com.tcl.tv.tclhome_passive           # pushes TCL content to the home screen at boot
+com.tcl.overseasappshow              # promotes preloaded apps
+com.tcl.messagebox                   # TCL message / promo inbox
+com.tcl.exhibit                      # store demo mode
+com.tcl.tvweishi                     # "cleaner" widget service
+com.tcl.smartlink.core               # silent partner-app installer
+android.autoinstalls.config.tcl.device   # partner-app auto installer config
+android.autoinstalls.config.google.gtvpai # Google partner-app auto installer config
+
+# TCL extras nobody here uses
+com.tcl.notereminder                 # notes and reminder widget
+com.tcl.ocean.instructions           # e-manual
+com.tcl.copydatatotv                 # "copy my data to the TV" helper
+com.tcl.smartalexa                   # Alexa integration (Google Assistant stays)
+com.tcl.browser                      # BrowseHere browser
+com.tcl.appmarket2                   # TCL app store (Google Play Store stays)
+org.chromium.webview_shell           # test browser, NOT the system WebView provider
+
+# Google extras nobody here uses
+com.google.android.feedback          # feedback collector
+com.google.android.play.games        # Play Games
+com.google.android.videos            # Play Movies & TV
+com.google.android.youtube.tvmusic   # YouTube Music
